@@ -1,0 +1,318 @@
+syntax = "proto3";
+
+package cloud.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+
+
+// Scheduler service provides functionality to manage and execute workflows and tasks.
+// It supports both standalone tasks and tasks within workflows, with scheduling capabilities.
+service Scheduler {
+  // Workflow management endpoints
+  rpc CreateWorkflow(CreateWorkflowRequest) returns (Workflow);
+  rpc GetWorkflow(GetWorkflowRequest) returns (Workflow);
+  rpc UpdateWorkflow(UpdateWorkflowRequest) returns (Workflow);
+  rpc DeleteWorkflow(DeleteWorkflowRequest) returns (DeleteResponse);
+  rpc ListWorkflows(ListWorkflowsRequest) returns (ListWorkflowsResponse);
+  rpc RunWorkflow(RunWorkflowRequest) returns (RunResponse);
+
+  // Task management endpoints
+  rpc CreateTask(CreateTaskRequest) returns (Task);
+  rpc GetTask(GetTaskRequest) returns (Task);
+  rpc UpdateTask(UpdateTaskRequest) returns (Task);
+  rpc DeleteTask(DeleteTaskRequest) returns (DeleteResponse);
+  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse);
+  rpc RunTask(RunTaskRequest) returns (RunResponse);
+}
+
+// Common response for delete operations
+message DeleteResponse {
+  bool success = 1; // Whether the deletion was successful
+  string message = 2; // Additional information about the operation
+  repeated string deleted_ids = 3; // IDs of resources that were deleted
+}
+
+// Common response for run operations
+message RunResponse {
+  bool success = 1; // Whether the run was successfully scheduled
+  string message = 2; // Additional information about the operation
+  string run_id = 3; // Unique identifier for this run instance
+  google.protobuf.Timestamp scheduled_at = 4; // When the run is scheduled for
+  google.protobuf.Timestamp next_run_at = 5; // When the next run will occur (for scheduled runs)
+}
+
+// Task configuration for creation and updates
+message TaskConfig {
+  string name = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // User-provided unique name for the task
+
+  repeated string dependencies = 2 [(validate.rules).repeated = {
+    max_items: 100
+  }]; // List of task IDs that must complete before this task can run
+
+  map<string, string> payload = 3 [(validate.rules).map = {
+    max_pairs: 50,
+    keys: {
+      string: {
+        min_len: 1,
+        max_len: 50,
+        pattern: "^[a-zA-Z0-9_-]+$"
+      }
+    },
+    values: {
+      string: {
+        max_len: 1000
+      }
+    }
+  }]; // User-defined metadata or configuration for the task
+
+  string schedule = 4 [(validate.rules).string = {
+    pattern: "^$|^\\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \\* \\* \\* \\*$"
+  }]; // Optional cron expression for scheduling the task
+}
+
+// Task definition with runtime information
+message Task {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Server-generated unique identifier
+
+  TaskConfig config = 2 [(validate.rules).message.required = true]; // Task configuration
+
+  string workflow_id = 3 [(validate.rules).string = {
+    pattern: "^$|^[a-zA-Z0-9_-]+$"
+  }]; // Optional: ID of the workflow this task belongs to
+
+  google.protobuf.Timestamp created_at = 4 [(validate.rules).message.required = true]; // When the task was created
+  google.protobuf.Timestamp updated_at = 5 [(validate.rules).message.required = true]; // When the task was last updated
+}
+
+// Workflow definition
+message Workflow {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Server-generated unique identifier
+
+  string name = 2 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // User-provided unique name
+
+  string schedule = 3 [(validate.rules).string = {
+    pattern: "^$|^\\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \\* \\* \\* \\*$"
+  }]; // Optional cron expression for scheduling the workflow
+
+  repeated Task tasks = 4 [(validate.rules).repeated = {
+    max_items: 1000
+  }]; // Tasks that are part of this workflow
+
+  google.protobuf.Timestamp created_at = 5 [(validate.rules).message.required = true]; // When the workflow was created
+  google.protobuf.Timestamp updated_at = 6 [(validate.rules).message.required = true]; // When the workflow was last updated
+}
+
+// Request to create a new workflow
+message CreateWorkflowRequest {
+  string name = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // User-provided unique name
+
+  string schedule = 2 [(validate.rules).string = {
+    pattern: "^$|^\\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \\* \\* \\* \\*$"
+  }]; // Optional cron expression for scheduling
+
+  repeated TaskConfig tasks = 3 [(validate.rules).repeated = {
+    max_items: 1000
+  }]; // Tasks to be created as part of the workflow
+}
+
+// Request to get a workflow
+message GetWorkflowRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Workflow ID to retrieve
+}
+
+// Request to update a workflow
+message UpdateWorkflowRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Workflow ID to update
+
+  string name = 2 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Optional: new name
+
+  string schedule = 3 [(validate.rules).string = {
+    pattern: "^$|^\\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \\* \\* \\* \\*$"
+  }]; // Optional: new schedule
+
+  repeated TaskConfig tasks = 4 [(validate.rules).repeated = {
+    max_items: 1000
+  }]; // Optional: new tasks to add
+}
+
+// Request to list workflows
+message ListWorkflowsRequest {
+  int32 page_size = 1 [(validate.rules).int32 = {
+    gte: 1,
+    lte: 100
+  }]; // Number of workflows to return per page
+
+  string page_token = 2 [(validate.rules).string = {
+    max_len: 100
+  }]; // Token for pagination
+}
+
+// Response containing a list of workflows
+message ListWorkflowsResponse {
+  repeated Workflow workflows = 1; // List of workflows
+  string next_page_token = 2 [(validate.rules).string = {
+    max_len: 100
+  }]; // Token for the next page
+}
+
+// Request to create a new task
+message CreateTaskRequest {
+  TaskConfig config = 1 [(validate.rules).message.required = true]; // Task configuration
+
+  string workflow_id = 2 [(validate.rules).string = {
+    pattern: "^$|^[a-zA-Z0-9_-]+$"
+  }]; // Optional: ID of the workflow to associate with
+}
+
+// Request to get a task
+message GetTaskRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Task ID to retrieve
+}
+
+// Request to update a task
+message UpdateTaskRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Task ID to update
+
+  TaskConfig config = 2; // Optional: new configuration
+
+  string workflow_id = 3 [(validate.rules).string = {
+    pattern: "^$|^[a-zA-Z0-9_-]+$"
+  }]; // Optional: new workflow association
+}
+
+// Request to list tasks
+message ListTasksRequest {
+  string workflow_id = 1 [(validate.rules).string = {
+    pattern: "^$|^[a-zA-Z0-9_-]+$"
+  }]; // Optional: filter tasks by workflow ID
+
+  int32 page_size = 2 [(validate.rules).int32 = {
+    gte: 1,
+    lte: 100
+  }]; // Number of tasks to return per page
+
+  string page_token = 3 [(validate.rules).string = {
+    max_len: 100
+  }]; // Token for pagination
+}
+
+// Response containing a list of tasks
+message ListTasksResponse {
+  repeated Task tasks = 1; // List of tasks
+  string next_page_token = 2 [(validate.rules).string = {
+    max_len: 100
+  }]; // Token for the next page
+}
+
+// Request to delete a workflow
+message DeleteWorkflowRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Workflow ID to delete
+
+  bool delete_tasks = 2; // Whether to delete associated tasks
+}
+
+// Request to delete a task
+message DeleteTaskRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Task ID to delete
+}
+
+// Request to run a workflow
+message RunWorkflowRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Workflow ID to run
+
+  map<string, string> parameters = 2 [(validate.rules).map = {
+    max_pairs: 50,
+    keys: {
+      string: {
+        min_len: 1,
+        max_len: 50,
+        pattern: "^[a-zA-Z0-9_-]+$"
+      }
+    },
+    values: {
+      string: {
+        max_len: 1000
+      }
+    }
+  }]; // Optional: parameters to override workflow defaults
+}
+
+// Request to run a task
+message RunTaskRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1,
+    max_len: 100,
+    pattern: "^[a-zA-Z0-9_-]+$"
+  }]; // Task ID to run
+
+  map<string, string> parameters = 2 [(validate.rules).map = {
+    max_pairs: 50,
+    keys: {
+      string: {
+        min_len: 1,
+        max_len: 50,
+        pattern: "^[a-zA-Z0-9_-]+$"
+      }
+    },
+    values: {
+      string: {
+        max_len: 1000
+      }
+    }
+  }]; // Optional: parameters to override task defaults
+}

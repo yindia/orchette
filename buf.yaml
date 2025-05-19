@@ -1,0 +1,13 @@
+version: v2
+modules:
+  - path: ./idl
+    name: buf.build/evalsocket/orchette
+lint:
+  use:
+    - DEFAULT
+breaking:
+  use:
+    - FILE
+deps:
+  - buf.build/envoyproxy/protoc-gen-validate
+
