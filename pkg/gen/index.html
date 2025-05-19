@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protocol Documentation</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic"/>
+    <style>
+      body {
+        width: 60em;
+        margin: 1em auto;
+        color: #222;
+        font-family: "Ubuntu", sans-serif;
+        padding-bottom: 4em;
+      }
+
+      h1 {
+        font-weight: normal;
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 0.5ex;
+      }
+
+      h2 {
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 0.5ex;
+        margin: 1.5em 0;
+      }
+
+      h3 {
+        font-weight: normal;
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 0.5ex;
+      }
+
+      a {
+        text-decoration: none;
+        color: #567e25;
+      }
+
+      table {
+        width: 100%;
+        font-size: 80%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        font-weight: 700;
+        background-color: #dcdcdc;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #fbfbfb;
+      }
+
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5ex 2ex;
+      }
+
+      td p {
+        text-indent: 1em;
+        margin: 0;
+      }
+
+      td p:nth-child(1) {
+        text-indent: 0;  
+      }
+
+       
+      .field-table td:nth-child(1) {  
+        width: 10em;
+      }
+      .field-table td:nth-child(2) {  
+        width: 10em;
+      }
+      .field-table td:nth-child(3) {  
+        width: 6em;
+      }
+      .field-table td:nth-child(4) {  
+        width: auto;
+      }
+
+       
+      .extension-table td:nth-child(1) {  
+        width: 10em;
+      }
+      .extension-table td:nth-child(2) {  
+        width: 10em;
+      }
+      .extension-table td:nth-child(3) {  
+        width: 10em;
+      }
+      .extension-table td:nth-child(4) {  
+        width: 5em;
+      }
+      .extension-table td:nth-child(5) {  
+        width: auto;
+      }
+
+       
+      .enum-table td:nth-child(1) {  
+        width: 10em;
+      }
+      .enum-table td:nth-child(2) {  
+        width: 10em;
+      }
+      .enum-table td:nth-child(3) {  
+        width: auto;
+      }
+
+       
+      .scalar-value-types-table tr {
+        height: 3em;
+      }
+
+       
+      #toc-container ul {
+        list-style-type: none;
+        padding-left: 1em;
+        line-height: 180%;
+        margin: 0;
+      }
+      #toc > li > a {
+        font-weight: bold;
+      }
+
+       
+      .file-heading {
+        width: 100%;
+        display: table;
+        border-bottom: 1px solid #aaa;
+        margin: 4em 0 1.5em 0;
+      }
+      .file-heading h2 {
+        border: none;
+        display: table-cell;
+      }
+      .file-heading a {
+        text-align: right;
+        display: table-cell;
+      }
+
+       
+      .badge {
+        width: 1.6em;
+        height: 1.6em;
+        display: inline-block;
+
+        line-height: 1.6em;
+        text-align: center;
+        font-weight: bold;
+        font-size: 60%;
+
+        color: #89ba48;
+        background-color: #dff0c8;
+
+        margin: 0.5ex 1em 0.5ex -1em;
+        border: 1px solid #fbfbfb;
+        border-radius: 1ex;
+      }
+    </style>
+
+    
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+  </head>
+
+  <body>
+
+    <h1 id="title">Protocol Documentation</h1>
+
+    <h2>Table of Contents</h2>
+
+    <div id="toc-container">
+      <ul id="toc">
+        
+          
+          <li>
+            <a href="#cloud%2fv1%2fcloud.proto">cloud/v1/cloud.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#cloud.v1.CreateTaskRequest"><span class="badge">M</span>CreateTaskRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.CreateWorkflowRequest"><span class="badge">M</span>CreateWorkflowRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.DeleteResponse"><span class="badge">M</span>DeleteResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.DeleteTaskRequest"><span class="badge">M</span>DeleteTaskRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.DeleteWorkflowRequest"><span class="badge">M</span>DeleteWorkflowRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.GetTaskRequest"><span class="badge">M</span>GetTaskRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.GetWorkflowRequest"><span class="badge">M</span>GetWorkflowRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.ListTasksRequest"><span class="badge">M</span>ListTasksRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.ListTasksResponse"><span class="badge">M</span>ListTasksResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.ListWorkflowsRequest"><span class="badge">M</span>ListWorkflowsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.ListWorkflowsResponse"><span class="badge">M</span>ListWorkflowsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.RunResponse"><span class="badge">M</span>RunResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.RunTaskRequest"><span class="badge">M</span>RunTaskRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.RunTaskRequest.ParametersEntry"><span class="badge">M</span>RunTaskRequest.ParametersEntry</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.RunWorkflowRequest"><span class="badge">M</span>RunWorkflowRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.RunWorkflowRequest.ParametersEntry"><span class="badge">M</span>RunWorkflowRequest.ParametersEntry</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.Task"><span class="badge">M</span>Task</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.TaskConfig"><span class="badge">M</span>TaskConfig</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.TaskConfig.PayloadEntry"><span class="badge">M</span>TaskConfig.PayloadEntry</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.UpdateTaskRequest"><span class="badge">M</span>UpdateTaskRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.UpdateWorkflowRequest"><span class="badge">M</span>UpdateWorkflowRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#cloud.v1.Workflow"><span class="badge">M</span>Workflow</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#cloud.v1.Scheduler"><span class="badge">S</span>Scheduler</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+        <li><a href="#scalar-value-types">Scalar Value Types</a></li>
+      </ul>
+    </div>
+
+    
+      
+      <div class="file-heading">
+        <h2 id="cloud/v1/cloud.proto">cloud/v1/cloud.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="cloud.v1.CreateTaskRequest">CreateTaskRequest</h3>
+        <p>Request to create a new task</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>config</td>
+                  <td><a href="#cloud.v1.TaskConfig">TaskConfig</a></td>
+                  <td></td>
+                  <td><p>Task configuration </p></td>
+                </tr>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: ID of the workflow to associate with </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>config</td>
+                  <td>
+                    <ul>
+                    
+                      <li>message.required: true</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.CreateWorkflowRequest">CreateWorkflowRequest</h3>
+        <p>Request to create a new workflow</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>User-provided unique name </p></td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional cron expression for scheduling </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td><a href="#cloud.v1.TaskConfig">TaskConfig</a></td>
+                  <td>repeated</td>
+                  <td><p>Tasks to be created as part of the workflow </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \* \* \* \*$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td>
+                    <ul>
+                    
+                      <li>repeated.max_items: 1000</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.DeleteResponse">DeleteResponse</h3>
+        <p>Common response for delete operations</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Whether the deletion was successful </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Additional information about the operation </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>IDs of resources that were deleted </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="cloud.v1.DeleteTaskRequest">DeleteTaskRequest</h3>
+        <p>Request to delete a task</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Task ID to delete </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.DeleteWorkflowRequest">DeleteWorkflowRequest</h3>
+        <p>Request to delete a workflow</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Workflow ID to delete </p></td>
+                </tr>
+              
+                <tr>
+                  <td>delete_tasks</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Whether to delete associated tasks </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.GetTaskRequest">GetTaskRequest</h3>
+        <p>Request to get a task</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Task ID to retrieve </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.GetWorkflowRequest">GetWorkflowRequest</h3>
+        <p>Request to get a workflow</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Workflow ID to retrieve </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.ListTasksRequest">ListTasksRequest</h3>
+        <p>Request to list tasks</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: filter tasks by workflow ID </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of tasks to return per page </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Token for pagination </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td>
+                    <ul>
+                    
+                      <li>int32.lte: 100</li>
+                    
+                      <li>int32.gte: 1</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>page_token</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.ListTasksResponse">ListTasksResponse</h3>
+        <p>Response containing a list of tasks</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td><a href="#cloud.v1.Task">Task</a></td>
+                  <td>repeated</td>
+                  <td><p>List of tasks </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next_page_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Token for the next page </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>next_page_token</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.ListWorkflowsRequest">ListWorkflowsRequest</h3>
+        <p>Request to list workflows</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of workflows to return per page </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Token for pagination </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td>
+                    <ul>
+                    
+                      <li>int32.lte: 100</li>
+                    
+                      <li>int32.gte: 1</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>page_token</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.ListWorkflowsResponse">ListWorkflowsResponse</h3>
+        <p>Response containing a list of workflows</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>workflows</td>
+                  <td><a href="#cloud.v1.Workflow">Workflow</a></td>
+                  <td>repeated</td>
+                  <td><p>List of workflows </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next_page_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Token for the next page </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>next_page_token</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.RunResponse">RunResponse</h3>
+        <p>Common response for run operations</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Whether the run was successfully scheduled </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Additional information about the operation </p></td>
+                </tr>
+              
+                <tr>
+                  <td>run_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Unique identifier for this run instance </p></td>
+                </tr>
+              
+                <tr>
+                  <td>scheduled_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the run is scheduled for </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next_run_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the next run will occur (for scheduled runs) </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="cloud.v1.RunTaskRequest">RunTaskRequest</h3>
+        <p>Request to run a task</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Task ID to run </p></td>
+                </tr>
+              
+                <tr>
+                  <td>parameters</td>
+                  <td><a href="#cloud.v1.RunTaskRequest.ParametersEntry">RunTaskRequest.ParametersEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Optional: parameters to override task defaults </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>parameters</td>
+                  <td>
+                    <ul>
+                    
+                      <li>map.max_pairs: 50</li>
+                    
+                      <li>map.keys.string.min_len: 1</li>
+                    
+                      <li>map.keys.string.max_len: 50</li>
+                    
+                      <li>map.keys.string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                      <li>map.values.string.max_len: 1000</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.RunTaskRequest.ParametersEntry">RunTaskRequest.ParametersEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="cloud.v1.RunWorkflowRequest">RunWorkflowRequest</h3>
+        <p>Request to run a workflow</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Workflow ID to run </p></td>
+                </tr>
+              
+                <tr>
+                  <td>parameters</td>
+                  <td><a href="#cloud.v1.RunWorkflowRequest.ParametersEntry">RunWorkflowRequest.ParametersEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Optional: parameters to override workflow defaults </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>parameters</td>
+                  <td>
+                    <ul>
+                    
+                      <li>map.max_pairs: 50</li>
+                    
+                      <li>map.keys.string.min_len: 1</li>
+                    
+                      <li>map.keys.string.max_len: 50</li>
+                    
+                      <li>map.keys.string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                      <li>map.values.string.max_len: 1000</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.RunWorkflowRequest.ParametersEntry">RunWorkflowRequest.ParametersEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="cloud.v1.Task">Task</h3>
+        <p>Task definition with runtime information</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Server-generated unique identifier </p></td>
+                </tr>
+              
+                <tr>
+                  <td>config</td>
+                  <td><a href="#cloud.v1.TaskConfig">TaskConfig</a></td>
+                  <td></td>
+                  <td><p>Task configuration </p></td>
+                </tr>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: ID of the workflow this task belongs to </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the task was created </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the task was last updated </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>config</td>
+                  <td>
+                    <ul>
+                    
+                      <li>message.required: true</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td>
+                    <ul>
+                    
+                      <li>message.required: true</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td>
+                    <ul>
+                    
+                      <li>message.required: true</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.TaskConfig">TaskConfig</h3>
+        <p>Task configuration for creation and updates</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>User-provided unique name for the task </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dependencies</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>List of task IDs that must complete before this task can run </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payload</td>
+                  <td><a href="#cloud.v1.TaskConfig.PayloadEntry">TaskConfig.PayloadEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>User-defined metadata or configuration for the task </p></td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional cron expression for scheduling the task </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>dependencies</td>
+                  <td>
+                    <ul>
+                    
+                      <li>repeated.max_items: 100</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>payload</td>
+                  <td>
+                    <ul>
+                    
+                      <li>map.max_pairs: 50</li>
+                    
+                      <li>map.keys.string.min_len: 1</li>
+                    
+                      <li>map.keys.string.max_len: 50</li>
+                    
+                      <li>map.keys.string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                      <li>map.values.string.max_len: 1000</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \* \* \* \*$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.TaskConfig.PayloadEntry">TaskConfig.PayloadEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="cloud.v1.UpdateTaskRequest">UpdateTaskRequest</h3>
+        <p>Request to update a task</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Task ID to update </p></td>
+                </tr>
+              
+                <tr>
+                  <td>config</td>
+                  <td><a href="#cloud.v1.TaskConfig">TaskConfig</a></td>
+                  <td></td>
+                  <td><p>Optional: new configuration </p></td>
+                </tr>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: new workflow association </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>workflow_id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.UpdateWorkflowRequest">UpdateWorkflowRequest</h3>
+        <p>Request to update a workflow</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Workflow ID to update </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: new name </p></td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional: new schedule </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td><a href="#cloud.v1.TaskConfig">TaskConfig</a></td>
+                  <td>repeated</td>
+                  <td><p>Optional: new tasks to add </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \* \* \* \*$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td>
+                    <ul>
+                    
+                      <li>repeated.max_items: 1000</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+        <h3 id="cloud.v1.Workflow">Workflow</h3>
+        <p>Workflow definition</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Server-generated unique identifier </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>User-provided unique name </p></td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional cron expression for scheduling the workflow </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td><a href="#cloud.v1.Task">Task</a></td>
+                  <td>repeated</td>
+                  <td><p>Tasks that are part of this workflow </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the workflow was created </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the workflow was last updated </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+            
+            
+            <h4>Validated Fields</h4>
+            <table>
+              <thead>
+                <tr>
+                  <td>Field</td>
+                  <td>Validations</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.min_len: 1</li>
+                    
+                      <li>string.max_len: 100</li>
+                    
+                      <li>string.pattern: ^[a-zA-Z0-9_-]&#43;$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>schedule</td>
+                  <td>
+                    <ul>
+                    
+                      <li>string.pattern: ^$|^\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]) \* \* \* \*$</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>tasks</td>
+                  <td>
+                    <ul>
+                    
+                      <li>repeated.max_items: 1000</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td>
+                    <ul>
+                    
+                      <li>message.required: true</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td>
+                    <ul>
+                    
+                      <li>message.required: true</li>
+                    
+                    </ul>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="cloud.v1.Scheduler">Scheduler</h3>
+        <p>Scheduler service provides functionality to manage and execute workflows and tasks.</p><p>It supports both standalone tasks and tasks within workflows, with scheduling capabilities.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CreateWorkflow</td>
+                <td><a href="#cloud.v1.CreateWorkflowRequest">CreateWorkflowRequest</a></td>
+                <td><a href="#cloud.v1.Workflow">Workflow</a></td>
+                <td><p>Workflow management endpoints</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetWorkflow</td>
+                <td><a href="#cloud.v1.GetWorkflowRequest">GetWorkflowRequest</a></td>
+                <td><a href="#cloud.v1.Workflow">Workflow</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateWorkflow</td>
+                <td><a href="#cloud.v1.UpdateWorkflowRequest">UpdateWorkflowRequest</a></td>
+                <td><a href="#cloud.v1.Workflow">Workflow</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteWorkflow</td>
+                <td><a href="#cloud.v1.DeleteWorkflowRequest">DeleteWorkflowRequest</a></td>
+                <td><a href="#cloud.v1.DeleteResponse">DeleteResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListWorkflows</td>
+                <td><a href="#cloud.v1.ListWorkflowsRequest">ListWorkflowsRequest</a></td>
+                <td><a href="#cloud.v1.ListWorkflowsResponse">ListWorkflowsResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RunWorkflow</td>
+                <td><a href="#cloud.v1.RunWorkflowRequest">RunWorkflowRequest</a></td>
+                <td><a href="#cloud.v1.RunResponse">RunResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateTask</td>
+                <td><a href="#cloud.v1.CreateTaskRequest">CreateTaskRequest</a></td>
+                <td><a href="#cloud.v1.Task">Task</a></td>
+                <td><p>Task management endpoints</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetTask</td>
+                <td><a href="#cloud.v1.GetTaskRequest">GetTaskRequest</a></td>
+                <td><a href="#cloud.v1.Task">Task</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateTask</td>
+                <td><a href="#cloud.v1.UpdateTaskRequest">UpdateTaskRequest</a></td>
+                <td><a href="#cloud.v1.Task">Task</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteTask</td>
+                <td><a href="#cloud.v1.DeleteTaskRequest">DeleteTaskRequest</a></td>
+                <td><a href="#cloud.v1.DeleteResponse">DeleteResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ListTasks</td>
+                <td><a href="#cloud.v1.ListTasksRequest">ListTasksRequest</a></td>
+                <td><a href="#cloud.v1.ListTasksResponse">ListTasksResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>RunTask</td>
+                <td><a href="#cloud.v1.RunTaskRequest">RunTaskRequest</a></td>
+                <td><a href="#cloud.v1.RunResponse">RunResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+
+    <h2 id="scalar-value-types">Scalar Value Types</h2>
+    <table class="scalar-value-types-table">
+      <thead>
+        <tr><td>.proto Type</td><td>Notes</td><td>C++</td><td>Java</td><td>Python</td><td>Go</td><td>C#</td><td>PHP</td><td>Ruby</td></tr>
+      </thead>
+      <tbody>
+        
+          <tr id="double">
+            <td>double</td>
+            <td></td>
+            <td>double</td>
+            <td>double</td>
+            <td>float</td>
+            <td>float64</td>
+            <td>double</td>
+            <td>float</td>
+            <td>Float</td>
+          </tr>
+        
+          <tr id="float">
+            <td>float</td>
+            <td></td>
+            <td>float</td>
+            <td>float</td>
+            <td>float</td>
+            <td>float32</td>
+            <td>float</td>
+            <td>float</td>
+            <td>Float</td>
+          </tr>
+        
+          <tr id="int32">
+            <td>int32</td>
+            <td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>int</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>integer</td>
+            <td>Bignum or Fixnum (as required)</td>
+          </tr>
+        
+          <tr id="int64">
+            <td>int64</td>
+            <td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>int/long</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>integer/string</td>
+            <td>Bignum</td>
+          </tr>
+        
+          <tr id="uint32">
+            <td>uint32</td>
+            <td>Uses variable-length encoding.</td>
+            <td>uint32</td>
+            <td>int</td>
+            <td>int/long</td>
+            <td>uint32</td>
+            <td>uint</td>
+            <td>integer</td>
+            <td>Bignum or Fixnum (as required)</td>
+          </tr>
+        
+          <tr id="uint64">
+            <td>uint64</td>
+            <td>Uses variable-length encoding.</td>
+            <td>uint64</td>
+            <td>long</td>
+            <td>int/long</td>
+            <td>uint64</td>
+            <td>ulong</td>
+            <td>integer/string</td>
+            <td>Bignum or Fixnum (as required)</td>
+          </tr>
+        
+          <tr id="sint32">
+            <td>sint32</td>
+            <td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>int</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>integer</td>
+            <td>Bignum or Fixnum (as required)</td>
+          </tr>
+        
+          <tr id="sint64">
+            <td>sint64</td>
+            <td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>int/long</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>integer/string</td>
+            <td>Bignum</td>
+          </tr>
+        
+          <tr id="fixed32">
+            <td>fixed32</td>
+            <td>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</td>
+            <td>uint32</td>
+            <td>int</td>
+            <td>int</td>
+            <td>uint32</td>
+            <td>uint</td>
+            <td>integer</td>
+            <td>Bignum or Fixnum (as required)</td>
+          </tr>
+        
+          <tr id="fixed64">
+            <td>fixed64</td>
+            <td>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</td>
+            <td>uint64</td>
+            <td>long</td>
+            <td>int/long</td>
+            <td>uint64</td>
+            <td>ulong</td>
+            <td>integer/string</td>
+            <td>Bignum</td>
+          </tr>
+        
+          <tr id="sfixed32">
+            <td>sfixed32</td>
+            <td>Always four bytes.</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>int</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>integer</td>
+            <td>Bignum or Fixnum (as required)</td>
+          </tr>
+        
+          <tr id="sfixed64">
+            <td>sfixed64</td>
+            <td>Always eight bytes.</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>int/long</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>integer/string</td>
+            <td>Bignum</td>
+          </tr>
+        
+          <tr id="bool">
+            <td>bool</td>
+            <td></td>
+            <td>bool</td>
+            <td>boolean</td>
+            <td>boolean</td>
+            <td>bool</td>
+            <td>bool</td>
+            <td>boolean</td>
+            <td>TrueClass/FalseClass</td>
+          </tr>
+        
+          <tr id="string">
+            <td>string</td>
+            <td>A string must always contain UTF-8 encoded or 7-bit ASCII text.</td>
+            <td>string</td>
+            <td>String</td>
+            <td>str/unicode</td>
+            <td>string</td>
+            <td>string</td>
+            <td>string</td>
+            <td>String (UTF-8)</td>
+          </tr>
+        
+          <tr id="bytes">
+            <td>bytes</td>
+            <td>May contain any arbitrary sequence of bytes.</td>
+            <td>string</td>
+            <td>ByteString</td>
+            <td>str</td>
+            <td>[]byte</td>
+            <td>ByteString</td>
+            <td>string</td>
+            <td>String (ASCII-8BIT)</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </body>
+</html>
+

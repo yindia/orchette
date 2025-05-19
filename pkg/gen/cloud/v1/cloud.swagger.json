@@ -1,0 +1,226 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "cloud/v1/cloud.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Scheduler"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "Whether the deletion was successful"
+        },
+        "message": {
+          "type": "string",
+          "title": "Additional information about the operation"
+        },
+        "deletedIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IDs of resources that were deleted"
+        }
+      },
+      "title": "Common response for delete operations"
+    },
+    "v1ListTasksResponse": {
+      "type": "object",
+      "properties": {
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Task"
+          },
+          "title": "List of tasks"
+        },
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for the next page"
+        }
+      },
+      "title": "Response containing a list of tasks"
+    },
+    "v1ListWorkflowsResponse": {
+      "type": "object",
+      "properties": {
+        "workflows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Workflow"
+          },
+          "title": "List of workflows"
+        },
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for the next page"
+        }
+      },
+      "title": "Response containing a list of workflows"
+    },
+    "v1RunResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "Whether the run was successfully scheduled"
+        },
+        "message": {
+          "type": "string",
+          "title": "Additional information about the operation"
+        },
+        "runId": {
+          "type": "string",
+          "title": "Unique identifier for this run instance"
+        },
+        "scheduledAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the run is scheduled for"
+        },
+        "nextRunAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the next run will occur (for scheduled runs)"
+        }
+      },
+      "title": "Common response for run operations"
+    },
+    "v1Task": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Server-generated unique identifier"
+        },
+        "config": {
+          "$ref": "#/definitions/v1TaskConfig",
+          "title": "Task configuration"
+        },
+        "workflowId": {
+          "type": "string",
+          "title": "Optional: ID of the workflow this task belongs to"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the task was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the task was last updated"
+        }
+      },
+      "title": "Task definition with runtime information"
+    },
+    "v1TaskConfig": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "User-provided unique name for the task"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of task IDs that must complete before this task can run"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "User-defined metadata or configuration for the task"
+        },
+        "schedule": {
+          "type": "string",
+          "title": "Optional cron expression for scheduling the task"
+        }
+      },
+      "title": "Task configuration for creation and updates"
+    },
+    "v1Workflow": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Server-generated unique identifier"
+        },
+        "name": {
+          "type": "string",
+          "title": "User-provided unique name"
+        },
+        "schedule": {
+          "type": "string",
+          "title": "Optional cron expression for scheduling the workflow"
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Task"
+          },
+          "title": "Tasks that are part of this workflow"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the workflow was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the workflow was last updated"
+        }
+      },
+      "title": "Workflow definition"
+    }
+  }
+}
